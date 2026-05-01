@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import PromptLab from './PromptLab.jsx';
 
 const initialMessages = [
   {
@@ -89,6 +90,7 @@ function Message({ message }) {
 }
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState('chat');
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -260,7 +262,32 @@ export default function App() {
           <button type="button">Help</button>
         </nav>
 
-        <main className="chat-panel">
+        <div className="tab-bar" role="tablist">
+          <button
+            role="tab"
+            type="button"
+            aria-selected={activeTab === 'chat'}
+            className={`tab-btn ${activeTab === 'chat' ? 'tab-btn--active' : ''}`}
+            onClick={() => setActiveTab('chat')}
+          >
+            채팅
+          </button>
+          <button
+            role="tab"
+            type="button"
+            aria-selected={activeTab === 'lab'}
+            className={`tab-btn ${activeTab === 'lab' ? 'tab-btn--active' : ''}`}
+            onClick={() => setActiveTab('lab')}
+          >
+            프롬프트 실습
+          </button>
+        </div>
+
+        {activeTab === 'lab' && (
+          <PromptLab onUsage={applyApiUsage} />
+        )}
+
+        <main className="chat-panel" style={{ display: activeTab === 'chat' ? 'flex' : 'none' }}>
           <div className="chat-history" aria-live="polite" ref={historyRef}>
             {messages.map((message) => (
               <Message key={message.id} message={message} />
