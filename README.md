@@ -1,5 +1,7 @@
 # ChatBot v1.0
 
+![ChatBot v1.0 스크린샷](assets/screenshot.png)
+
 React + Vite + OpenAI API로 만든 Windows 95 스타일의 대화형 챗봇 및 프롬프트 엔지니어링 실습 도구입니다.
 
 ## 주요 기능
